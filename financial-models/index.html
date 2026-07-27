@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Financial Models — Hashir Faraz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F3F4F7; --ink:#10151F; --ink-soft:#4A5262; --ink-faint:#8B93A3;
+  --line:#E3E6EC; --accent:#2E5CE6; --accent-soft:#E8EEFC; --navy:#0A0E1C; --green:#1CA653;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink)}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-spacing:-.02em}
+.wrap{max-width:1080px;margin:0 auto;padding:0 clamp(18px,4vw,32px)}
+.top{padding:26px 0 0}
+.back{font:600 13px 'Inter',sans-serif;color:var(--ink-faint);text-decoration:none}
+.back:hover{color:var(--ink)}
+.head{padding:38px 0 30px;border-bottom:1px solid var(--line)}
+.head h1{font-size:clamp(28px,4.5vw,42px);font-weight:700}
+.head p{margin-top:12px;font-size:15px;color:var(--ink-soft);max-width:640px;line-height:1.65}
+.model{display:grid;grid-template-columns:minmax(0,7fr) minmax(220px,3fr);gap:clamp(20px,4vw,56px);padding:36px 0;border-bottom:1px solid var(--line);align-items:start}
+.model h2{font-size:21px;font-weight:600;margin-bottom:8px}
+.model .desc{font-size:14px;color:var(--ink-soft);line-height:1.65;margin-bottom:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.chip{font:500 11.5px 'Inter',sans-serif;color:var(--ink-soft);background:#fff;border:1px solid var(--line);border-radius:99px;padding:6px 12px}
+.stats{display:flex;gap:26px;flex-wrap:wrap}
+.stat small{display:block;font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:3px}
+.stat b{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600}
+.side{display:flex;flex-direction:column;gap:10px}
+.btn{display:block;text-align:center;font:600 13.5px 'Inter',sans-serif;text-decoration:none;border-radius:12px;padding:13px 18px;transition:transform .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn-dl{background:var(--accent);color:#fff}
+.btn-live{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.fmt{font-size:11px;color:var(--ink-faint);text-align:center}
+.foot{padding:40px 0 60px;font-size:13px;color:var(--ink-faint)}
+.foot a{color:var(--accent);text-decoration:none;font-weight:600}
+@media(max-width:760px){.model{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a class="back" href="../index.html">← Back to portfolio</a></div>
+  <div class="head">
+    <h1>Financial Models</h1>
+    <p>Bottom-up, fully-formula Excel models — every number traces back to an assumption you can change. Blue cells are inputs, yellow cells are estimates built to be stress-tested. Download any of them and break the base case.</p>
+  </div>
+
+  <div class="model" id="delivery">
+    <div>
+      <h2>Delivery Service — 3-Year Model</h2>
+      <p class="desc">A last-mile delivery operation built from the parcel market down: addressable volume → merchant acquisition funnel → zone-based pricing with COD and returns fees → a contracted-vs-employed driver fleet with a hard capacity ceiling → monthly P&amp;L, EBITDA and the funding requirement.</p>
+      <div class="chips"><span class="chip">Assumptions</span><span class="chip">Volume &amp; Funnel</span><span class="chip">Monthly P&amp;L</span><span class="chip">Annual Summary</span></div>
+      <div class="stats">
+        <div class="stat"><small>FY3 Revenue</small><b>QAR 4.0M</b></div>
+        <div class="stat"><small>FY3 Deliveries</small><b>198K</b></div>
+        <div class="stat"><small>Funding Req.</small><b>QAR 695K</b></div>
+      </div>
+    </div>
+    <div class="side">
+      <a class="btn btn-dl" href="files/delivery-service-financial-model.xlsx" download>Download model (.xlsx)</a>
+      <a class="btn btn-live" href="../delivery-model/">Try the interactive version →</a>
+      <span class="fmt">1,432 formulas · 4 tabs</span>
+    </div>
+  </div>
+
+  <div class="model" id="gym">
+    <div>
+      <h2>Gym &amp; Fitness Studio — 3-Year Model</h2>
+      <p class="desc">A boutique gym from catchment population to EBITDA: local market funnel → member growth with monthly churn → Standard/Premium tiers, personal training with trainer revenue-share, and class packs → coaching payroll that scales by year → break-even month and funding requirement.</p>
+      <div class="chips"><span class="chip">Assumptions</span><span class="chip">Member Build</span><span class="chip">Monthly P&amp;L</span><span class="chip">Annual Summary</span></div>
+      <div class="stats">
+        <div class="stat"><small>Y3 Members</small><b>600</b></div>
+        <div class="stat"><small>FY3 EBITDA</small><b>QAR 1.4M</b></div>
+        <div class="stat"><small>Break-Even</small><b>Month 32</b></div>
+      </div>
+    </div>
+    <div class="side">
+      <a class="btn btn-dl" href="files/gym-fitness-financial-model.xlsx" download>Download model (.xlsx)</a>
+      <span class="fmt">915 formulas · 5 tabs</span>
+    </div>
+  </div>
+
+  <div class="model" id="app">
+    <div>
+      <h2>Home Services App — 3-Year Model</h2>
+      <p class="desc">An on-demand home services marketplace: market size → app downloads → active users → cleaning subscriptions from a real rate card, plus one-off marketplace jobs → contribution margin and EBITDA. Also available as a browsable HTML build.</p>
+      <div class="chips"><span class="chip">Cover</span><span class="chip">Assumptions</span><span class="chip">Revenue Build</span><span class="chip">P&amp;L</span></div>
+      <div class="stats">
+        <div class="stat"><small>Structure</small><b>TAM → SAM → Users</b></div>
+        <div class="stat"><small>Streams</small><b>Subscriptions + Jobs</b></div>
+      </div>
+    </div>
+    <div class="side">
+      <a class="btn btn-dl" href="files/home-services-app-model.xlsx" download>Download model (.xlsx)</a>
+      <a class="btn btn-live" href="../home-services-model/">Browse the HTML version →</a>
+      <span class="fmt">1,763 formulas</span>
+    </div>
+  </div>
+
+  <div class="model" id="media">
+    <div>
+      <h2>Sports Media Platform — Multi-Round Revenue Model</h2>
+      <p class="desc">A fundraising-grade revenue model across four stages, Seed to Series C. MAU growth with new-vertical launches, subscription conversion and pricing that step up per round, programmatic web advertising, and an agency arm — rolled into stage totals and exit run-rates.</p>
+      <div class="chips"><span class="chip">Stage Assumptions</span><span class="chip">48-Month Revenue Build</span><span class="chip">Stage Summary</span></div>
+      <div class="stats">
+        <div class="stat"><small>MAU at Exit</small><b>1.46M</b></div>
+        <div class="stat"><small>Series C ARR</small><b>$8.6M</b></div>
+        <div class="stat"><small>Stages</small><b>Seed → C</b></div>
+      </div>
+    </div>
+    <div class="side">
+      <a class="btn btn-dl" href="files/sports-media-revenue-model.xlsx" download>Download model (.xlsx)</a>
+      <span class="fmt">469 formulas · 4 tabs</span>
+    </div>
+  </div>
+
+  <div class="model" id="market">
+    <div>
+      <h2>Market Expansion Study — Weighted Scoring Model</h2>
+      <p class="desc">37 candidate markets for an F&amp;B franchise, scored on nine weighted criteria — demographics, category saturation, economics and supply-chain feasibility — with exclusion flags and a red-flags register. The interactive version lets you re-weight the criteria live.</p>
+      <div class="chips"><span class="chip">Weighted Criteria</span><span class="chip">37 Markets</span><span class="chip">Red Flags Register</span></div>
+      <div class="stats">
+        <div class="stat"><small>Markets</small><b>37</b></div>
+        <div class="stat"><small>Criteria</small><b>9 weighted</b></div>
+      </div>
+    </div>
+    <div class="side">
+      <a class="btn btn-dl" href="files/market-expansion-study.xlsx" download>Download study (.xlsx)</a>
+      <a class="btn btn-live" href="../market-expansion-study/">Try the interactive version →</a>
+      <span class="fmt">765 formulas</span>
+    </div>
+  </div>
+
+  <div class="model" id="kpi">
+    <div>
+      <h2>Content KPI Scorecard</h2>
+      <p class="desc">A publishing scorecard for a sports media brand — thirteen content series across six platforms with monthly targets, actuals and auto-colouring progress. Pairs with a live dashboard view built for weekly reviews.</p>
+      <div class="chips"><span class="chip">13 Series</span><span class="chip">6 Platforms</span><span class="chip">Auto-Colouring Progress</span></div>
+      <div class="stats">
+        <div class="stat"><small>Format</small><b>Target / Posted / %</b></div>
+      </div>
+    </div>
+    <div class="side">
+      <a class="btn btn-dl" href="files/content-kpi-scorecard.xlsx" download>Download scorecard (.xlsx)</a>
+      <a class="btn btn-live" href="../content-dashboard/">See the dashboard version →</a>
+      <span class="fmt">82 formulas</span>
+    </div>
+  </div>
+
+  <div class="foot">Want one of these rebuilt around your numbers? <a href="../index.html#contact">Get in touch →</a></div>
+</div>
+</body>
+</html>

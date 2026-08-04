@@ -38,7 +38,7 @@
   --font-mono:'IBM Plex Mono',monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+/* no scroll-behavior:smooth — it conflicts with y-mandatory snap in Chromium (snap re-resolves backwards mid-animation); native snapping animates on its own */
 body{font-family:var(--font-body);color:var(--ink);background:var(--paper);line-height:1.55;-webkit-font-smoothing:antialiased}
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
@@ -49,11 +49,19 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 
 /* ---------- pages ---------- */
 .page{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100svh;padding:72px 0;text-align:center}
+/* p-cards is a pinned scrub section: the section grows tall (JS), .pin stays on screen */
+#p-cards{display:block;padding:0}
+#p-cards .pin{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100svh;padding:72px 0;text-align:center}
 @media(min-width:960px) and (min-height:640px){
+  /* page alignment is handled by the JS settle controller (CSS y-mandatory snap rubber-bands discrete wheel notches in Chromium) */
   .page{height:100svh;min-height:0;justify-content:flex-start;padding:64px 0 44px}
   #p-problem,#p-final{justify-content:center;padding:0}
   #p-final{padding-bottom:24px}
   .page .fill{flex:1;display:flex;flex-direction:column;justify-content:center;width:100%;min-height:0}
+  #p-cards{height:auto;min-height:100svh;padding:0}
+  #p-cards .pin{position:sticky;top:0;height:100svh;min-height:0;padding:0;overflow:hidden;width:100%}
+  #p-cards .wrap-full{flex:none}
+  #p-cards .fill{flex:none}
 }
 @media(min-width:960px) and (min-height:640px) and (max-height:830px){
   .page{padding:44px 0 32px}
@@ -94,8 +102,13 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 /* ---------- carousel (section 2) ---------- */
 .wrap-full{width:100%;display:flex;flex-direction:column;flex:1;min-height:0}
 .wrap-full .page-title{padding:0 20px}
-.car-wrap{position:relative;width:100%;margin-top:10px}
+#p-cards .page-title{margin-bottom:clamp(32px,6vh,56px)}
+.car-wrap{position:relative;width:100%;margin-top:0}
 .car{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px max(24px,calc((100vw - 1240px)/2));scrollbar-width:none}
+@media(min-width:960px) and (min-height:640px){
+  /* desktop: page scroll drives the carousel — kill x-snap & manual x-scroll so JS owns scrollLeft */
+  .car{overflow-x:hidden;scroll-snap-type:none}
+}
 .car::-webkit-scrollbar{display:none}
 .cardx{position:relative;flex:0 0 258px;aspect-ratio:3/4.05;border-radius:22px;overflow:hidden;scroll-snap-align:center;background:#14141C;text-align:left;box-shadow:0 16px 40px rgba(20,20,40,.15)}
 @media(min-width:900px){.cardx{flex-basis:286px}}
@@ -495,6 +508,7 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 
 <!-- ============ PAGE 2 — GET AN ANALYST (carousel) ============ -->
 <section class="page" id="p-cards">
+  <div class="pin">
   <div class="wrap-full">
     <h2 class="page-title">Get an Analyst for Your Business</h2>
     <div class="fill">
@@ -576,6 +590,7 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
       </div>
     </div>
     </div>
+  </div>
   </div>
 </section>
 
@@ -878,7 +893,71 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 </a>
 
 <script>
-/* ---------- carousel: wheel-step + auto-advance ---------- */
+/* ---------- carousel: desktop = scroll-linked scrub (pinned section), mobile = swipe + auto-advance ---------- */
+const scrubMQ = window.matchMedia('(min-width:960px) and (min-height:640px)');
+
+(function(){
+  const sec=document.getElementById('p-cards');
+  const car=document.getElementById('car');
+  if(!sec||!car) return;
+  let top=0, len=1, max=0;
+
+  function measure(){
+    if(!scrubMQ.matches){ sec.style.height=''; return; }
+    sec.style.height='';                                  // reset before measuring
+    max = car.scrollWidth - car.clientWidth;              // horizontal travel
+    len = Math.max(1, Math.round(max));                   // 1px page scroll : 1px card scroll
+    sec.style.height = (window.innerHeight + len) + 'px'; // pin travel = card travel
+    top = sec.getBoundingClientRect().top + window.scrollY;
+    update();
+  }
+  function update(){
+    if(!scrubMQ.matches) return;
+    const p = Math.min(1, Math.max(0, (window.scrollY - top) / len));
+    car.scrollLeft = p * max;
+  }
+  let raf=0;
+  window.addEventListener('scroll',()=>{ if(!raf) raf=requestAnimationFrame(()=>{raf=0;update();}); },{passive:true});
+  window.addEventListener('resize',measure);
+  scrubMQ.addEventListener('change',measure);
+  window.addEventListener('load',measure);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+  measure();
+})();
+
+/* ---------- page settle: after scrolling stops, glide to the nearest page start ---------- */
+(function(){
+  const cards=document.getElementById('p-cards'); if(!cards) return;
+  let settling=false, tmr=0;
+
+  function targets(){
+    const pts=[...document.querySelectorAll('.page')].map(s=>Math.round(s.getBoundingClientRect().top+window.scrollY));
+    pts.push(Math.round(cards.getBoundingClientRect().top+window.scrollY+cards.offsetHeight-window.innerHeight)); // scrub end (pin release)
+    return pts;
+  }
+  function scrubInterior(y){
+    const a=cards.getBoundingClientRect().top+window.scrollY;
+    const b=a+cards.offsetHeight-window.innerHeight;
+    return y>a+4 && y<b-4;
+  }
+  function settle(){
+    if(!scrubMQ.matches||settling) return;
+    const y=window.scrollY;
+    const maxY=document.documentElement.scrollHeight-window.innerHeight;
+    if(scrubInterior(y)) return;                       // resting mid-scrub is intentional
+    let best=0,d=Infinity;
+    targets().forEach(p=>{const dd=Math.abs(p-y); if(dd<d){d=dd;best=p;}});
+    best=Math.min(best,maxY);
+    if(Math.abs(best-y)<2) return;                     // already clean
+    settling=true;
+    window.scrollTo({top:best,behavior:'smooth'});
+    const iv=setInterval(()=>{ if(Math.abs(window.scrollY-best)<2){clearInterval(iv);settling=false;} },80);
+    setTimeout(()=>{clearInterval(iv);settling=false;},1400);
+  }
+  window.addEventListener('scroll',()=>{ if(settling) return; clearTimeout(tmr); tmr=setTimeout(settle,140); },{passive:true});
+  ['wheel','touchstart','keydown'].forEach(ev=>window.addEventListener(ev,()=>{settling=false;},{passive:true}));
+})();
+
 (function(){
   const car=document.getElementById('car'); if(!car) return;
   const step=()=>car.querySelector('.cardx').getBoundingClientRect().width+14;
@@ -888,6 +967,7 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
   const pause=()=>{idle=false; clearTimeout(t); t=setTimeout(()=>idle=true,5000);};
   ['pointerdown','touchstart'].forEach(ev=>car.addEventListener(ev,pause,{passive:true}));
   setInterval(()=>{
+    if(scrubMQ.matches) return;   // desktop: page scroll owns the carousel
     if(!idle) return;
     if(atEnd()) car.scrollTo({left:0,behavior:'smooth'});
     else slide(1);

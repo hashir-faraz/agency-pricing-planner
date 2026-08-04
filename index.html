@@ -45,9 +45,22 @@ a{color:inherit;text-decoration:none}
 h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 
 .wrap{max-width:1080px;margin:0 auto;padding:0 20px;width:100%}
+@media(min-width:960px) and (min-height:640px){.page>.wrap{display:flex;flex-direction:column;flex:1;min-height:0}}
 
 /* ---------- pages ---------- */
-.page{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:96px 0;text-align:center;scroll-snap-align:start;scroll-snap-stop:always}
+.page{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100svh;padding:72px 0;text-align:center;scroll-snap-align:start;scroll-snap-stop:always}
+@media(min-width:960px) and (min-height:640px){
+  .page{height:100svh;min-height:0;justify-content:flex-start;padding:64px 0 44px}
+  #p-problem,#p-final{justify-content:center;padding:0}
+  #p-final{padding-bottom:24px}
+  .page .fill{flex:1;display:flex;flex-direction:column;justify-content:center;width:100%;min-height:0}
+}
+@media(min-width:960px) and (min-height:640px) and (max-height:830px){
+  .page{padding:44px 0 32px}
+  .page-title{font-size:clamp(26px,4.4vw,44px)}
+  .page .fill{zoom:.85}
+}
+@media(max-width:959.5px),(max-height:639.5px){.page .fill{width:100%}}
 .page.tall{min-height:100svh}
 .page-title{font-size:clamp(30px,5.2vw,54px);font-weight:800}
 .page-sub{font-family:var(--font-display);font-size:clamp(19px,3vw,28px);font-weight:500;color:var(--ink-soft);margin-top:18px}
@@ -78,31 +91,85 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 #p-problem h1{font-size:clamp(32px,6vw,64px);font-weight:800;max-width:900px;margin:0 auto}
 #p-problem .even{display:block;font-family:var(--font-display);font-size:clamp(18px,2.8vw,28px);font-weight:500;color:var(--dark-dim);margin-top:18px;letter-spacing:-.01em}
 
-/* one-line title on the analyst page */
-#p-control .page-title{font-size:clamp(28px,4.9vw,58px)}
-@media(min-width:720px){#p-control .page-title{white-space:nowrap}}
+/* ---------- carousel (section 2) ---------- */
+.wrap-full{width:100%;display:flex;flex-direction:column;flex:1;min-height:0}
+.wrap-full .page-title{padding:0 20px}
+.car-wrap{position:relative;width:100%;margin-top:10px}
+.car{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px max(24px,calc((100vw - 1240px)/2));scrollbar-width:none}
+.car::-webkit-scrollbar{display:none}
+.cardx{position:relative;flex:0 0 258px;aspect-ratio:3/4.05;border-radius:22px;overflow:hidden;scroll-snap-align:center;background:#14141C;text-align:left;box-shadow:0 16px 40px rgba(20,20,40,.15)}
+@media(min-width:900px){.cardx{flex-basis:286px}}
+.cardx img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cardx .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,8,14,.62) 0%,rgba(8,8,14,.12) 42%,rgba(8,8,14,.28) 100%)}
+.cardx h3{position:absolute;top:18px;left:19px;right:19px;color:#fff;font-size:22px;font-weight:800;line-height:1.1;letter-spacing:-.01em;text-shadow:0 2px 12px rgba(0,0,0,.35)}
+.cardx h3 span{display:block;font-size:11.5px;font-weight:600;opacity:.88;margin-top:4px;white-space:nowrap}
+.gchip{position:absolute;left:15px;right:15px;bottom:18px;height:104px;background:rgba(255,255,255,.96);border-radius:14px;padding:10px 12px;box-shadow:0 12px 30px rgba(0,0,0,.3);display:flex;flex-direction:column;justify-content:center}
+.crm-row{display:flex;align-items:center;gap:8px;padding:6px 0}
+.crm-row + .crm-row{border-top:1px solid var(--line)}
+.sil{width:23px;height:23px;border-radius:50%;background:#D9D8D2;position:relative;flex:none;overflow:hidden}
+.sil::before{content:"";position:absolute;top:4px;left:7px;width:9px;height:9px;border-radius:50%;background:#B7B6AF}
+.sil::after{content:"";position:absolute;top:14px;left:2px;width:19px;height:13px;border-radius:50%;background:#B7B6AF}
+.blob{height:8px;border-radius:99px;background:#E3E2DC;flex:1}
+.crm-row:nth-child(2) .blob{max-width:64%}
+.money{font-weight:800;font-size:11px;color:var(--ink-soft);flex:none;letter-spacing:.05em}
+.tagc{font-size:9px;font-weight:800;padding:3px 8px;border-radius:99px;flex:none}
+.tagc.closed{background:#DBEAFE;color:#2563EB}
+.tagc.hot{background:#DCF5E7;color:var(--pos)}
+.dt{font-size:9.5px;color:#B9B8B2;font-weight:600;flex:none}
+.gantt{display:flex;flex-direction:column;gap:7px}
+.g{height:10px;border-radius:99px;background:#E3E2DC;position:relative}
+.g i{position:absolute;top:0;bottom:0;border-radius:99px;background:var(--accent)}
+.g:nth-child(1) i{left:0;width:52%}
+.g:nth-child(2) i{left:18%;width:44%;background:#2563EB}
+.g:nth-child(3) i{left:38%;width:40%}
+.g:nth-child(4) i{left:58%;width:34%;background:var(--pos)}
+.cash{position:relative;height:100%;display:flex;align-items:center;gap:6px}
+.cash::before{content:"";position:absolute;left:0;right:0;top:56%;height:1.5px;background:var(--line)}
+.cm{flex:1;position:relative;height:100%}
+.cm i{position:absolute;left:20%;right:20%;border-radius:3px}
+.cm .up{background:var(--pos);bottom:44%}
+.cm .dn{background:#2563EB;top:56%}
+.duel{display:flex;flex-direction:column;gap:12px;justify-content:center}
+.prow{display:flex;align-items:center;gap:9px}
+.pico{width:24px;height:24px;border-radius:7px;flex:none;display:grid;place-items:center;color:#fff}
+.pico.ig{background:radial-gradient(circle at 30% 110%,#FDB75D 0%,#D5307A 55%,#7A3AC2 100%)}
+.pico.fb{background:#1877F2;font-weight:800;font-size:14px;font-family:Georgia,serif}
+.pico svg{width:14px;height:14px}
+.pword{font-size:11.5px;font-weight:800;width:66px;flex:none;color:var(--ink-soft)}
+.pbarm{flex:1;height:8px;border-radius:99px;background:#E3E2DC;position:relative;overflow:hidden}
+.pbarm i{position:absolute;left:0;top:0;bottom:0;border-radius:99px}
+.prow.win .pbarm i{width:86%;background:var(--pos);box-shadow:0 0 10px rgba(10,135,84,.6)}
+.prow.lose .pbarm i{width:36%;background:#C9C8D6}
+.tkc{display:flex;align-items:center;gap:12px}
+.ringx{position:relative;width:50px;height:50px;flex:none;display:grid;place-items:center}
+.ringx svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.ringx circle{fill:none;stroke-width:4}
+.ringx .b{stroke:#E3E2DC}
+.ringx .f{stroke:#2563EB;stroke-linecap:round;stroke-dasharray:150.8;stroke-dashoffset:26}
+.ringx .face{width:34px;height:34px;border-radius:50%;background:#D9D8D2;position:relative;overflow:hidden}
+.ringx .face::before{content:"";position:absolute;top:6px;left:11px;width:12px;height:12px;border-radius:50%;background:#B7B6AF}
+.ringx .face::after{content:"";position:absolute;top:20px;left:4px;width:26px;height:16px;border-radius:50%;background:#B7B6AF}
+.tk-bars{flex:1;display:flex;flex-direction:column;gap:8px}
+.tkb{height:8px;border-radius:99px;background:#E3E2DC;position:relative}
+.tkb i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:var(--pos)}
+.tkb:nth-child(1) i{width:82%}
+.tkb:nth-child(2) i{width:58%;background:var(--accent)}
+.tkb:nth-child(3) i{width:74%}
+.flow{display:flex;align-items:center;padding:6px 2px}
+.node{width:27px;height:27px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:12px;font-weight:800;color:#fff}
+.node.ok{background:var(--pos)}
+.node.stuck{background:#DC2626;animation:pulse 1.4s ease infinite}
+.node.wait{background:#D9D8D2}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.45)}50%{box-shadow:0 0 0 7px rgba(220,38,38,0)}}
+.link{flex:1;height:3px;background:#E3E2DC}
+.link.done{background:var(--pos)}
 
-/* ---------- tiles ---------- */
-.tiles{display:grid;gap:16px;margin-top:52px;width:100%}
-@media(min-width:640px){.tiles{grid-template-columns:repeat(2,1fr)}}
-@media(min-width:1000px){.tiles{grid-template-columns:repeat(3,1fr)}}
-.tile{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px 22px;transition:box-shadow .2s ease,border-color .2s ease}
-.tile:hover{border-color:#CFCEF3;box-shadow:0 12px 32px rgba(20,20,40,.07)}
-.tile h3{font-size:24px;font-weight:600;text-align:center;margin-bottom:16px}
-.tile ul{list-style:none}
-.tile li{font-size:13px;color:var(--ink-soft);padding:6px 0;display:flex;align-items:center;justify-content:flex-start;text-align:left;gap:8px}
-.tile li .eye{margin-left:auto}
-.eye{flex:none;opacity:.38;color:var(--accent);cursor:pointer;display:inline-flex}
-.eye svg{width:15px;height:15px}
-.eye:hover{opacity:.9}
-
-/* ---------- page 4 — demos ---------- */
 /* ---------- before / after ---------- */
-#p-demos{padding:40px 0}
 .ba-grid{display:grid;gap:16px;margin-top:22px;width:100%;text-align:left}
 .ba-col{display:flex;flex-direction:column;min-width:0}
 @media(min-width:960px){.ba-grid{grid-template-columns:.58fr 1.42fr;align-items:stretch}}
-.ba{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px;display:flex;flex-direction:column;min-width:0;flex:1}
+.ba{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:16px;display:flex;flex-direction:column;min-width:0;flex:1}
+@media(min-width:960px) and (min-height:640px){.ba{height:430px;flex:none}}
 .ba-tag{font-family:var(--font-display);font-size:19px;font-weight:800;letter-spacing:-.01em;color:var(--ink);margin-bottom:10px;text-align:center}
 .ba.after .ba-tag{color:var(--accent)}
 .mess{background:#F1F0EA;border-radius:18px;padding:12px 10px 10px;display:flex;flex-direction:column;gap:6px;flex:1;justify-content:flex-start}
@@ -172,7 +239,7 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 @media(min-width:960px){.segs{width:max-content;max-width:100%;border-radius:999px}}
 .seg{font-family:var(--font-display);font-weight:600;font-size:13px;padding:8px 14px;border-radius:999px;cursor:pointer;border:none;background:transparent;color:var(--ink-soft)}
 .seg.active{background:var(--accent);color:#fff}
-.demo{display:none;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:16px;min-height:240px}
+.demo{display:none;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:14px;min-height:0;overflow-y:auto}
 .demo.active{display:block}
 .demo-h{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:18px}
 .demo-h b{font-family:var(--font-display);font-size:17px}
@@ -185,7 +252,7 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 .pipe-head span:nth-child(3),.pipe-head span:nth-child(5){text-align:center}
 .lead .date{text-align:center}
 .pipe-head{font-family:var(--font-body);font-weight:600;font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft);padding:0 2px 8px;border-bottom:1px solid var(--line)}
-.lead{padding:10px 2px;border-top:1px solid var(--line)}
+.lead{padding:8px 2px;border-top:1px solid var(--line)}
 .lead:nth-of-type(2){border-top:none}
 .lead b{font-size:13.5px;font-weight:700}
 .lead .num,.lead .date{font-size:12.5px;font-variant-numeric:tabular-nums;color:var(--ink-soft)}
@@ -201,9 +268,9 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 .chip.warm{background:#FEF3C7;color:#B45309}
 .chip.hot{background:#DCF5E7;color:#0A8754}
 .chip.closed{background:#DBEAFE;color:#2563EB}
-.pipe-kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}
+.pipe-kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:12px}
 @media(min-width:760px){.pipe-kpis{grid-template-columns:repeat(4,1fr)}}
-.pk{border:1px solid transparent;border-radius:12px;padding:13px}
+.pk{border:1px solid transparent;border-radius:12px;padding:10px 12px}
 .pk span{font-size:11.5px;display:block;opacity:.75}
 .pk b{font-size:17px;font-weight:700;font-variant-numeric:tabular-nums}
 .pk.cold{background:#FDE8E8}.pk.cold span,.pk.cold b{color:#B91C1C}
@@ -235,8 +302,8 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 .fin-stack.rev{flex-direction:column-reverse}
 .fin-stack.exp{flex-direction:column}
 .fin-stack i{display:block;border-radius:2px;flex:none}
-.fin-stack.rev i{background:#2563EB}
-.fin-stack.exp i{background:#DC2626}
+.fin-stack.rev i{background:#0A8754}
+.fin-stack.exp i{background:#2563EB}
 .fin-lab{position:absolute;left:50%;transform:translateX(-50%);font-size:9.5px;font-weight:700;color:var(--ink-soft);white-space:nowrap;font-variant-numeric:tabular-nums}
 .net-dot{position:absolute;left:50%;transform:translate(-50%,50%);width:9px;height:9px;border-radius:50%;background:var(--ink);border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3);transition:bottom .3s ease;cursor:default;z-index:2}
 .fin-x{display:flex;gap:10px;margin-top:16px}
@@ -289,9 +356,9 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 .pc-sel.a{border:1px solid #2563EB}
 .pc-sel.b{border:1px solid #0A8754}
 .h2h{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px 8px}
-.h2h-row{padding:5px 0}
-.h2h-lab{text-align:center;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:5px}
-.h2h-track{position:relative;height:20px;display:flex;align-items:center}
+.h2h-row{padding:3.5px 0}
+.h2h-lab{text-align:center;font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:3px}
+.h2h-track{position:relative;height:16px;display:flex;align-items:center}
 .h2h-track::before{content:"";position:absolute;left:50%;top:-2px;bottom:-2px;width:1.5px;background:var(--line)}
 .hbar{position:absolute;top:3px;bottom:3px;border-radius:99px;transition:width .35s ease,opacity .3s ease,box-shadow .3s ease}
 .hbar.a{right:50%;background:#2563EB;margin-right:2px}
@@ -299,7 +366,7 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 .hbar.dim{opacity:.32}
 .hbar.a.glow{background:#1D4ED8;box-shadow:0 0 12px rgba(37,99,235,.55)}
 .hbar.b.glow{background:var(--pos);box-shadow:0 0 12px rgba(10,135,84,.55)}
-.hval{position:absolute;font-size:11.5px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);top:50%;transform:translateY(-50%)}
+.hval{position:absolute;font-size:10.5px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);top:50%;transform:translateY(-50%)}
 .hval.a{right:calc(50% + var(--w) + 8px)}
 .hval.b{left:calc(50% + var(--w) + 8px)}
 .verdict{margin-top:12px;background:var(--accent-soft);border:1px solid #CFCEF3;border-radius:12px;padding:11px 15px;font-size:13px;font-weight:600;color:var(--accent-deep)}
@@ -313,7 +380,7 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 .ava-ring > svg circle{fill:none;stroke-width:5}
 .ava-ring > svg .bg{stroke:var(--line)}
 .ava-ring > svg .fg{stroke:#2563EB;stroke-linecap:round;stroke-dasharray:270.2}
-.tm-ava{position:relative;width:74px;height:74px;border-radius:50%;background:linear-gradient(140deg,var(--accent),var(--accent-deep));color:#fff;display:grid;place-items:center}
+.tm-ava{position:relative;width:74px;height:74px;border-radius:50%;background:#E3E2DC;color:#9A99A6;display:grid;place-items:center}
 .tm-prof b{font-size:15.5px}
 .tm-scoreline{font-size:12.5px;font-weight:600;color:var(--ink-soft);display:inline-flex;align-items:center;gap:7px}
 .tm-score{font-style:normal;font-size:12.5px;font-weight:800;color:var(--accent-deep);background:var(--accent-soft);padding:4px 11px;border-radius:999px}
@@ -352,18 +419,17 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 .bub time{display:block;font-size:10px;color:var(--ink-soft);margin-top:5px;text-align:right}
 
 /* ---------- your analyst ---------- */
-#p-analyst{padding:64px 0}
 .id-grid{display:grid;gap:44px;margin-top:36px;width:100%;text-align:left}
-@media(min-width:900px){.id-grid{grid-template-columns:.85fr 1.15fr;align-items:center}}
+@media(min-width:900px){.id-grid{grid-template-columns:.8fr 1.2fr;align-items:start}}
 .id-photo{text-align:center}
 
-.portrait{display:block;width:100%;max-width:300px;aspect-ratio:3/4;object-fit:cover;border-radius:26px;margin:0 auto 16px;box-shadow:0 24px 60px rgba(53,51,205,.28)}
+.portrait{display:block;width:100%;max-width:245px;aspect-ratio:3/4;object-fit:cover;border-radius:24px;margin:0 auto 14px;box-shadow:0 24px 60px rgba(53,51,205,.28)}
 .id-photo h3{font-size:26px}
-.id-photo .role{font-family:var(--font-mono);font-size:13px;color:var(--accent-deep);margin-top:5px}
-.id-info .across{font-family:var(--font-display);font-weight:700;font-size:clamp(19px,2.4vw,24px);margin-bottom:18px;text-align:center}
+.id-photo .role{font-family:var(--font-display);font-weight:600;font-size:14px;letter-spacing:.02em;color:var(--ink-soft);margin-top:5px}
+.id-info .across{font-family:var(--font-display);font-weight:700;font-size:clamp(17px,2vw,21px);margin-top:16px;text-align:center}
 @media(min-width:900px){.id-info .across{text-align:left}}
-.logos{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-start;max-width:466px}
-.lg{width:104px;aspect-ratio:1/1;border:1px solid var(--line);border-radius:14px;object-fit:cover;background:#fff}
+.logos{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-start;max-width:560px}
+.lg{width:100px;aspect-ratio:1/1;border:1px solid var(--line);border-radius:14px;object-fit:cover;background:#fff}
 @media(max-width:900px){.logos{justify-content:center;margin:0 auto}}
 
 /* ---------- page 7 — pricing ---------- */
@@ -394,6 +460,8 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 .foot{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center;justify-content:space-between;font-size:13.5px}
 .dark-foot{color:var(--dark-dim);border-top:1px solid var(--dark-line);padding-top:24px;margin-top:48px}
 .dark-foot a:hover{color:#fff}
+.dark-foot .links{display:flex;flex-direction:row;align-items:center;gap:22px}
+.dark-foot .links svg{width:22px;height:22px;display:block}
 .dark-foot img{height:26px;width:auto}
 
 /* floating whatsapp */
@@ -425,37 +493,88 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
   </div>
 </section>
 
-<!-- ============ PAGE 2 — GET AN ANALYST ============ -->
-<section class="page" id="p-control">
-  <div class="wrap">
+<!-- ============ PAGE 2 — GET AN ANALYST (carousel) ============ -->
+<section class="page" id="p-cards">
+  <div class="wrap-full">
     <h2 class="page-title">Get an Analyst for Your Business</h2>
-    <p class="page-sub">You run the business. Your analyst <span class="rotor" data-words="tracks,analyses,reports,presents">tracks</span> everything.</p>
+    <div class="fill">
+    <div class="car-wrap">
+      <div class="car" id="car">
 
-    <div class="tiles">
-      <div class="tile"><h3>Sales</h3><ul>
-        <li>Know what's happening with every lead <span class="eye" title="Preview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span></li>
-        <li>View sales trends &amp; performance vs targets <span class="eye" title="Preview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span></li>
-      </ul></div>
-      <div class="tile"><h3>Project</h3><ul>
-        <li>Track project costs, timelines, and payments <span class="eye" title="Preview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span></li>
-        <li>Get custom dashboards for every client <span class="eye" title="Preview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span></li>
-      </ul></div>
-      <div class="tile"><h3>Financial</h3><ul>
-        <li>Track business expenses by categories <span class="eye" title="Preview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span></li>
-        <li>Plan ahead using financial models <span class="eye" title="Preview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span></li>
-      </ul></div>
-      <div class="tile"><h3>Marketing</h3><ul>
-        <li>Know which campaigns and posts work <span class="eye" title="Preview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span></li>
-        <li>Know the cost of getting customers <span class="eye" title="Preview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span></li>
-      </ul></div>
-      <div class="tile"><h3>Team</h3><ul>
-        <li>Set and track KPIs <span class="eye" title="Preview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span></li>
-        <li>Manage performance without micromanagement <span class="eye" title="Preview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span></li>
-      </ul></div>
-      <div class="tile"><h3>Operations</h3><ul>
-        <li>Routine quality audits, reported <span class="eye" title="Preview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span></li>
-        <li>Identify what's restricting business growth <span class="eye" title="Preview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span></li>
-      </ul></div>
+        <div class="cardx">
+          <img class="bg" src="assets/cards/sales.jpg" alt="">
+          <div class="shade"></div>
+          <h3>Sales<span>Stay on top of every lead</span></h3>
+          <div class="gchip">
+            <div class="crm-row"><span class="sil"></span><span class="blob"></span><span class="money">$$$</span><span class="tagc hot">Hot</span><span class="dt">12 Mar</span></div>
+            <div class="crm-row"><span class="sil"></span><span class="blob"></span><span class="money">$</span><span class="tagc closed">Closed</span><span class="dt">28 Mar</span></div>
+          </div>
+        </div>
+
+        <div class="cardx">
+          <img class="bg" src="assets/cards/project.jpg" alt="">
+          <div class="shade"></div>
+          <h3>Project<span>Every project, crystal clear</span></h3>
+          <div class="gchip"><div class="gantt"><div class="g"><i></i></div><div class="g"><i></i></div><div class="g"><i></i></div><div class="g"><i></i></div></div></div>
+        </div>
+
+        <div class="cardx">
+          <img class="bg" src="assets/cards/financial.jpg" alt="">
+          <div class="shade"></div>
+          <h3>Financial<span>See where the money goes</span></h3>
+          <div class="gchip">
+            <div class="cash">
+              <div class="cm"><i class="up" style="height:34%"></i><i class="dn" style="height:22%"></i></div>
+              <div class="cm"><i class="up" style="height:26%"></i><i class="dn" style="height:30%"></i></div>
+              <div class="cm"><i class="up" style="height:40%"></i><i class="dn" style="height:24%"></i></div>
+              <div class="cm"><i class="up" style="height:32%"></i><i class="dn" style="height:20%"></i></div>
+              <div class="cm"><i class="up" style="height:44%"></i><i class="dn" style="height:26%"></i></div>
+              <div class="cm"><i class="up" style="height:38%"></i><i class="dn" style="height:18%"></i></div>
+              <div class="cm"><i class="up" style="height:48%"></i><i class="dn" style="height:22%"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cardx">
+          <img class="bg" src="assets/cards/marketing.jpg" alt="">
+          <div class="shade"></div>
+          <h3>Marketing<span>Know which posts generate leads</span></h3>
+          <div class="gchip">
+            <div class="duel">
+              <div class="prow win"><span class="pico ig"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1.15" fill="white" stroke="none"/></svg></span><span class="pword">Reel</span><div class="pbarm"><i></i></div></div>
+              <div class="prow lose"><span class="pico fb">f</span><span class="pword">Campaign</span><div class="pbarm"><i></i></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cardx">
+          <img class="bg" src="assets/cards/team.jpg" alt="">
+          <div class="shade"></div>
+          <h3>Team<span>Manage without micromanaging</span></h3>
+          <div class="gchip">
+            <div class="tkc">
+              <div class="ringx"><svg viewBox="0 0 56 56"><circle class="b" cx="28" cy="28" r="24"/><circle class="f" cx="28" cy="28" r="24"/></svg><div class="face"></div></div>
+              <div class="tk-bars"><div class="tkb"><i></i></div><div class="tkb"><i></i></div><div class="tkb"><i></i></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cardx">
+          <img class="bg" src="assets/cards/operations.jpg" alt="">
+          <div class="shade"></div>
+          <h3>Operations<span>Find what's holding you back</span></h3>
+          <div class="gchip">
+            <div class="flow">
+              <span class="node ok">✓</span><span class="link done"></span>
+              <span class="node ok">✓</span><span class="link done"></span>
+              <span class="node stuck">!</span><span class="link"></span>
+              <span class="node wait"></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
     </div>
   </div>
 </section>
@@ -464,6 +583,7 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 <section class="page" id="p-demos">
   <div class="wrap">
     <h2 class="page-title">Effortless Visibility</h2>
+<div class="fill">
 
     <div class="segs top" role="tablist">
       <button class="seg active" data-demo="d-sales" data-before="b-sales">Sales Pipeline</button>
@@ -616,6 +736,7 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
       </div>
       </div>
     </div>
+</div>
   </div>
 </section>
 
@@ -623,6 +744,7 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 <section class="page" id="p-hassle">
   <div class="wrap">
     <h2 class="page-title">Everything Included</h2>
+<div class="fill">
     <div class="hassle-grid">
       <ul class="ticks">
         <li>For businesses of any size, in any industry</li>
@@ -649,6 +771,7 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
         </div>
       </div>
     </div>
+</div>
   </div>
 </section>
 
@@ -656,14 +779,14 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 <section class="page" id="p-analyst">
   <div class="wrap">
     <h2 class="page-title">Your Analyst</h2>
+<div class="fill">
     <div class="id-grid">
       <div class="id-photo">
         <img class="portrait" src="assets/hashir.jpg" alt="Hashir Faraz">
         <h3>Hashir Faraz</h3>
-        <div class="role">Business Analyst — GCC</div>
+        <div class="role">MBA, BIDA®, FPAP</div>
       </div>
       <div class="id-info">
-        <div class="across">5+ years of experience across <span class="rotor" data-words="F&amp;B,Real Estate,SaaS,Sports &amp; Media,Services">F&amp;B</span></div>
         <div class="logos">
           <img class="lg" src="assets/logos/binyousef.jpg" alt="Bin Yousef">
           <img class="lg" src="assets/logos/tabiboba.jpg" alt="Tabi Boba">
@@ -680,8 +803,10 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
           <img class="lg" src="assets/logos/highcamp.jpg" alt="Highcamp Holding">
           <img class="lg" src="assets/logos/qool.jpg" alt="Qool Qatar">
         </div>
+        <div class="across">5+ years of experience across <span class="rotor" data-words="F&amp;B,Real Estate,SaaS,Sports &amp; Media,Services">F&amp;B</span></div>
       </div>
     </div>
+</div>
   </div>
 </section>
 
@@ -689,6 +814,7 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 <section class="page" id="p-pricing">
   <div class="wrap">
     <h2 class="page-title">Start Today</h2>
+<div class="fill">
     <div class="plans">
       <div class="plan">
         <h3>One-Time Setup</h3>
@@ -720,6 +846,7 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
         <a class="btn btn-ghost" href="https://wa.me/97455299831?text=Hi%20Hashir%2C%20I%20need%20something%20custom%20%E2%80%94%20can%20we%20talk%3F" target="_blank" rel="noopener">Contact me</a>
       </div>
     </div>
+</div>
   </div>
 </section>
 
@@ -735,13 +862,12 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
   <div class="wrap foot dark-foot">
     <img src="assets/logo-light.png" alt="Hashir Faraz">
     <div class="links">
-      <a href="https://wa.me/97455299831">WhatsApp</a>
-      <a href="https://www.linkedin.com/in/hashirfaraz" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://www.instagram.com/businessanalyst.hf" target="_blank" rel="noopener">Instagram</a>
-      <a href="/work">My work →</a>
+      <a aria-label="WhatsApp" href="https://wa.me/97455299831"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.1-.7l.4-.5.2-.4c.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.9.9-1.2 2-.8 3.2.5 1.4 1.5 2.8 2.9 4 1.9 1.6 3.4 2.1 4.5 2.3 1 .2 1.8 0 2.4-.5.4-.4.7-1 .8-1.5.1-.4 0-.6-.2-.8-.1 0-.3-.1-.6-.2Z"/></svg></a>
+      <a aria-label="LinkedIn" href="https://www.linkedin.com/in/hashirfaraz" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.49 2.49 0 1 1 5 8.48a2.49 2.49 0 0 1-.02-4.98ZM3 9.75h4V21H3V9.75Zm6.5 0h3.83v1.54h.05c.53-1 1.84-2.06 3.79-2.06 4.05 0 4.8 2.67 4.8 6.14V21h-4v-5.09c0-1.21-.02-2.77-1.69-2.77-1.7 0-1.96 1.32-1.96 2.68V21h-3.82V9.75Z"/></svg></a>
+      <a aria-label="Instagram" href="https://www.instagram.com/businessanalyst.hf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1.15" fill="currentColor" stroke="none"/></svg></a>
     </div>
-    <span>© 2026 Hashir Faraz · Doha, Qatar</span>
   </div>
+
 </section>
 
 
@@ -751,6 +877,32 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 </a>
 
 <script>
+/* ---------- carousel: wheel-step + auto-advance ---------- */
+(function(){
+  const car=document.getElementById('car'); if(!car) return;
+  const sec=document.getElementById('p-cards');
+  const step=()=>car.querySelector('.cardx').getBoundingClientRect().width+14;
+  const atEnd=()=>car.scrollLeft>=car.scrollWidth-car.clientWidth-10;
+  const atStart=()=>car.scrollLeft<10;
+  const slide=dir=>car.scrollBy({left:dir*step(),behavior:'smooth'});
+  let lastWheel=0, idle=true, t;
+  const pause=()=>{idle=false; clearTimeout(t); t=setTimeout(()=>idle=true,5000);};
+  sec.addEventListener('wheel',e=>{
+    const down=e.deltaY>0;
+    if((down&&!atEnd())||(!down&&!atStart())){
+      e.preventDefault(); pause();
+      const now=Date.now();
+      if(now-lastWheel>450){ lastWheel=now; slide(down?1:-1); }
+    }
+  },{passive:false});
+  ['pointerdown','touchstart'].forEach(ev=>car.addEventListener(ev,pause,{passive:true}));
+  setInterval(()=>{
+    if(!idle) return;
+    if(atEnd()) car.scrollTo({left:0,behavior:'smooth'});
+    else slide(1);
+  },3500);
+})();
+
 /* ---------- rotors — inside-out reveal (width collapse/expand) ---------- */
 (function(){
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -817,9 +969,8 @@ document.querySelectorAll('.seg').forEach(btn=>{
   const leads=[
     {n:'Lead A',v:18000,lc:'12 Mar',s:3},
     {n:'Lead B',v:26000,lc:'28 Mar',s:2},
-    {n:'Lead C',v:9500,lc:'21 Mar',s:1},
-    {n:'Lead D',v:15000,lc:'02 Mar',s:0},
-    {n:'Lead E',v:21000,lc:'25 Mar',s:2},
+    {n:'Lead C',v:15000,lc:'02 Mar',s:0},
+    {n:'Lead D',v:21000,lc:'25 Mar',s:2},
   ];
   // s = number of boxes ticked: 0 open, 1 cold, 2 warm, 3 hot, 4 closed
   const names=['open','cold','warm','hot','closed'];
@@ -886,8 +1037,8 @@ document.querySelectorAll('.seg').forEach(btn=>{
   }
   const revHolder=document.getElementById('cf-rev'), expHolder=document.getElementById('cf-exp');
   if(!revHolder.querySelector('.cfc')){
-    chips(revHolder,revCats,'r','#2563EB');
-    chips(expHolder,expCats,'e','#DC2626');
+    chips(revHolder,revCats,'r','#0A8754');
+    chips(expHolder,expCats,'e','#2563EB');
   }
 
   function draw(){

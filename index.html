@@ -45,30 +45,50 @@ a{color:inherit;text-decoration:none}
 h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 
 .wrap{max-width:1080px;margin:0 auto;padding:0 20px;width:100%}
-@media(min-width:960px) and (min-height:640px){.page>.wrap{display:flex;flex-direction:column;flex:1;min-height:0}}
+@media(min-width:960px) and (min-height:560px){.page>.wrap:not(.foot){display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0}}
 
 /* ---------- pages ---------- */
 .page{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100svh;padding:72px 0;text-align:center}
 /* p-cards is a pinned scrub section: the section grows tall (JS), .pin stays on screen */
 #p-cards{display:block;padding:0}
 #p-cards .pin{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100svh;padding:72px 0;text-align:center}
-@media(min-width:960px) and (min-height:640px){
+@media(min-width:960px) and (min-height:560px){
   /* page alignment is handled by the JS settle controller (CSS y-mandatory snap rubber-bands discrete wheel notches in Chromium) */
   .page{height:100svh;min-height:0;justify-content:flex-start;padding:64px 0 44px}
   #p-problem,#p-final{justify-content:center;padding:0}
-  #p-final{padding-bottom:24px}
+  #p-final{position:relative;padding-bottom:0}
+  #p-final .foot{position:absolute;left:50%;transform:translateX(-50%);bottom:22px;width:100%;max-width:1080px;margin-top:0}
   .page .fill{flex:1;display:flex;flex-direction:column;justify-content:center;width:100%;min-height:0}
   #p-cards{height:auto;min-height:100svh;padding:0}
   #p-cards .pin{position:sticky;top:0;height:100svh;min-height:0;padding:0;overflow:hidden;width:100%}
   #p-cards .wrap-full{flex:none}
   #p-cards .fill{flex:none}
 }
-@media(min-width:960px) and (min-height:640px) and (max-height:830px){
+@media(min-width:960px) and (min-height:560px) and (max-height:830px){
   .page{padding:44px 0 32px}
   .page-title{font-size:clamp(26px,4.4vw,44px)}
   .page .fill{zoom:.85}
 }
-@media(max-width:959.5px),(max-height:639.5px){.page .fill{width:100%}}
+@media(min-width:960px) and (min-height:560px) and (max-height:700px){
+  /* 150%-scaled laptops: ~615-630px of CSS height when maximized.
+     Content scales to .85 (not smaller); vertical room comes from
+     compressing the large internal margins designed for tall screens. */
+  .page{padding:26px 0 16px}
+  .page-title{font-size:clamp(24px,3.8vw,38px)}
+  .page-sub{font-size:clamp(16px,2.4vw,22px);margin-top:12px}
+  .page .fill{zoom:.85}
+  #p-cards .page-title{margin-bottom:clamp(18px,3.5vh,32px)}
+  .segs.top{margin-top:14px}
+  .ba-grid{margin-top:14px}
+  .hassle-grid{margin-top:18px;gap:36px}
+  .id-grid{margin-top:18px;gap:32px}
+  .plans{margin-top:22px}
+  .plan{padding:22px 24px}
+  .plan ul{margin:16px 0 18px}
+  #p-final p{margin:12px auto 24px}
+  .dark-foot{margin-top:28px;padding-top:18px}
+}
+@media(max-width:959.5px),(max-height:559.5px){.page .fill{width:100%}}
 .page.tall{min-height:100svh}
 .page-title{font-size:clamp(30px,5.2vw,54px);font-weight:800}
 .page-sub{font-family:var(--font-display);font-size:clamp(19px,3vw,28px);font-weight:500;color:var(--ink-soft);margin-top:18px}
@@ -105,7 +125,7 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 #p-cards .page-title{margin-bottom:clamp(32px,6vh,56px)}
 .car-wrap{position:relative;width:100%;margin-top:0}
 .car{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px max(24px,calc((100vw - 1240px)/2));scrollbar-width:none}
-@media(min-width:960px) and (min-height:640px){
+@media(min-width:960px) and (min-height:560px){
   /* desktop: page scroll drives the carousel — kill x-snap & manual x-scroll so JS owns scrollLeft */
   .car{overflow-x:hidden;scroll-snap-type:none}
 }
@@ -182,7 +202,7 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 .ba-col{display:flex;flex-direction:column;min-width:0}
 @media(min-width:960px){.ba-grid{grid-template-columns:.58fr 1.42fr;align-items:stretch}}
 .ba{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:16px;display:flex;flex-direction:column;min-width:0;flex:1}
-@media(min-width:960px) and (min-height:640px){.ba{height:430px;flex:none}}
+@media(min-width:960px) and (min-height:560px){.ba{height:430px;flex:none}}
 .ba-tag{font-family:var(--font-display);font-size:19px;font-weight:800;letter-spacing:-.01em;color:var(--ink);margin-bottom:10px;text-align:center}
 .ba.after .ba-tag{color:var(--accent)}
 .mess{background:#F1F0EA;border-radius:18px;padding:12px 10px 10px;display:flex;flex-direction:column;gap:6px;flex:1;justify-content:flex-start}
@@ -807,7 +827,7 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
           <img class="lg" src="assets/logos/discoverqatar.jpg" alt="Discover Qatar">
           <img class="lg" src="assets/logos/binyousef.jpg" alt="Bin Yousef">
           <img class="lg" src="assets/logos/entertainer.jpg" alt="The Entertainer">
-          <img class="lg" src="assets/logos/qool.jpg" alt="Qool Qatar">
+          <img class="lg" src="assets/logos/hyundai.jpg" alt="Hyundai Engineering &amp; Construction">
           <img class="lg" src="assets/logos/totalpay.jpg" alt="TotalPay">
           <img class="lg" src="assets/logos/cargoz.jpg" alt="Cargoz">
           <img class="lg" src="assets/logos/homes4life.jpg" alt="Homes4Life">
@@ -817,7 +837,7 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
           <img class="lg" src="assets/logos/roop.jpg" alt="Roop Marketing">
           <img class="lg" src="assets/logos/dynatech.jpg" alt="Dynatech">
           <img class="lg" src="assets/logos/highcamp.jpg" alt="Highcamp Holding">
-          <img class="lg" src="assets/logos/lightdigital.jpg" alt="Light Digital">
+          <img class="lg" src="assets/logos/qool.jpg" alt="Qool Qatar">
         </div>
         <div class="across">5+ years of experience across <span class="rotor" data-words="F&amp;B,Real Estate,SaaS,Sports &amp; Media,Services">F&amp;B</span></div>
       </div>
@@ -894,7 +914,7 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 
 <script>
 /* ---------- carousel: desktop = scroll-linked scrub (pinned section), mobile = swipe + auto-advance ---------- */
-const scrubMQ = window.matchMedia('(min-width:960px) and (min-height:640px)');
+const scrubMQ = window.matchMedia('(min-width:960px) and (min-height:560px)');
 
 (function(){
   const sec=document.getElementById('p-cards');
@@ -925,29 +945,37 @@ const scrubMQ = window.matchMedia('(min-width:960px) and (min-height:640px)');
   measure();
 })();
 
-/* ---------- page settle: after scrolling stops, glide to the nearest page start ---------- */
+/* ---------- page settle: after scrolling stops, glide to the nearest page start ----------
+   Gated on pointer type (mouse/trackpad), NOT window size — runs at any viewport so
+   non-maximized windows / OS display scaling / toolbars can't disable it.
+   Sections taller than the window (the pinned card scrub on desktop, or any long
+   section in the small-window natural-flow layout) allow free rest in their interior
+   and expose two targets: top-aligned and bottom-aligned. */
 (function(){
-  const cards=document.getElementById('p-cards'); if(!cards) return;
+  const fine=window.matchMedia('(pointer:fine)');
   let settling=false, tmr=0;
 
-  function targets(){
-    const pts=[...document.querySelectorAll('.page')].map(s=>Math.round(s.getBoundingClientRect().top+window.scrollY));
-    pts.push(Math.round(cards.getBoundingClientRect().top+window.scrollY+cards.offsetHeight-window.innerHeight)); // scrub end (pin release)
-    return pts;
-  }
-  function scrubInterior(y){
-    const a=cards.getBoundingClientRect().top+window.scrollY;
-    const b=a+cards.offsetHeight-window.innerHeight;
-    return y>a+4 && y<b-4;
+  function snapData(){
+    const vh=window.innerHeight, pts=[], zones=[];
+    document.querySelectorAll('.page').forEach(s=>{
+      const r=s.getBoundingClientRect();
+      const top=Math.round(r.top+window.scrollY), h=Math.round(r.height);
+      pts.push(top);
+      if(h>vh+120){                   // meaningfully taller than the window: free interior + bottom-aligned target
+        pts.push(top+h-vh);
+        zones.push([top+4, top+h-vh-4]);
+      }
+    });
+    return {pts,zones};
   }
   function settle(){
-    if(!scrubMQ.matches||settling) return;
+    if(!fine.matches||settling) return;
     const y=window.scrollY;
+    const {pts,zones}=snapData();
+    if(zones.some(z=>y>z[0]&&y<z[1])) return;          // resting mid-section is intentional
     const maxY=document.documentElement.scrollHeight-window.innerHeight;
-    if(scrubInterior(y)) return;                       // resting mid-scrub is intentional
     let best=0,d=Infinity;
-    targets().forEach(p=>{const dd=Math.abs(p-y); if(dd<d){d=dd;best=p;}});
-    best=Math.min(best,maxY);
+    pts.forEach(p=>{ p=Math.min(p,maxY); const dd=Math.abs(p-y); if(dd<d){d=dd;best=p;} });
     if(Math.abs(best-y)<2) return;                     // already clean
     settling=true;
     window.scrollTo({top:best,behavior:'smooth'});

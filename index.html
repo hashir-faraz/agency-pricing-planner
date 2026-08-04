@@ -38,7 +38,7 @@
   --font-mono:'IBM Plex Mono',monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-snap-type:y mandatory}
+html{scroll-behavior:smooth}
 body{font-family:var(--font-body);color:var(--ink);background:var(--paper);line-height:1.55;-webkit-font-smoothing:antialiased}
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
@@ -48,7 +48,7 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 @media(min-width:960px) and (min-height:640px){.page>.wrap{display:flex;flex-direction:column;flex:1;min-height:0}}
 
 /* ---------- pages ---------- */
-.page{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100svh;padding:72px 0;text-align:center;scroll-snap-align:start;scroll-snap-stop:always}
+.page{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100svh;padding:72px 0;text-align:center}
 @media(min-width:960px) and (min-height:640px){
   .page{height:100svh;min-height:0;justify-content:flex-start;padding:64px 0 44px}
   #p-problem,#p-final{justify-content:center;padding:0}
@@ -788,20 +788,21 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
       </div>
       <div class="id-info">
         <div class="logos">
+          <img class="lg" src="assets/logos/dohabank.jpg" alt="Doha Bank">
+          <img class="lg" src="assets/logos/discoverqatar.jpg" alt="Discover Qatar">
           <img class="lg" src="assets/logos/binyousef.jpg" alt="Bin Yousef">
-          <img class="lg" src="assets/logos/tabiboba.jpg" alt="Tabi Boba">
-          <img class="lg" src="assets/logos/mvp.jpg" alt="MVP">
-          <img class="lg" src="assets/logos/roop.jpg" alt="Roop Marketing">
-          <img class="lg" src="assets/logos/ukiyo.jpg" alt="Ukiyo">
-          <img class="lg" src="assets/logos/lightdigital.jpg" alt="Light Digital">
-          <img class="lg" src="assets/logos/homes4life.jpg" alt="Homes4Life">
-          <img class="lg" src="assets/logos/cargoz.jpg" alt="Cargoz">
-          <img class="lg" src="assets/logos/walco.jpg" alt="Walco Middle East">
-          <img class="lg" src="assets/logos/delight.jpg" alt="Delight International Movers">
           <img class="lg" src="assets/logos/entertainer.jpg" alt="The Entertainer">
+          <img class="lg" src="assets/logos/qool.jpg" alt="Qool Qatar">
+          <img class="lg" src="assets/logos/totalpay.jpg" alt="TotalPay">
+          <img class="lg" src="assets/logos/cargoz.jpg" alt="Cargoz">
+          <img class="lg" src="assets/logos/homes4life.jpg" alt="Homes4Life">
+          <img class="lg" src="assets/logos/entertainerbiz.jpg" alt="The Entertainer Business">
+          <img class="lg" src="assets/logos/walco.jpg" alt="Walco">
+          <img class="lg" src="assets/logos/housemap.jpg" alt="House Map Properties">
+          <img class="lg" src="assets/logos/roop.jpg" alt="Roop Marketing">
           <img class="lg" src="assets/logos/dynatech.jpg" alt="Dynatech">
           <img class="lg" src="assets/logos/highcamp.jpg" alt="Highcamp Holding">
-          <img class="lg" src="assets/logos/qool.jpg" alt="Qool Qatar">
+          <img class="lg" src="assets/logos/lightdigital.jpg" alt="Light Digital">
         </div>
         <div class="across">5+ years of experience across <span class="rotor" data-words="F&amp;B,Real Estate,SaaS,Sports &amp; Media,Services">F&amp;B</span></div>
       </div>
@@ -880,21 +881,11 @@ h1,h2,h3{font-family:var(--font-display);line-height:1.1;letter-spacing:-.02em}
 /* ---------- carousel: wheel-step + auto-advance ---------- */
 (function(){
   const car=document.getElementById('car'); if(!car) return;
-  const sec=document.getElementById('p-cards');
   const step=()=>car.querySelector('.cardx').getBoundingClientRect().width+14;
   const atEnd=()=>car.scrollLeft>=car.scrollWidth-car.clientWidth-10;
-  const atStart=()=>car.scrollLeft<10;
   const slide=dir=>car.scrollBy({left:dir*step(),behavior:'smooth'});
-  let lastWheel=0, idle=true, t;
+  let idle=true, t;
   const pause=()=>{idle=false; clearTimeout(t); t=setTimeout(()=>idle=true,5000);};
-  sec.addEventListener('wheel',e=>{
-    const down=e.deltaY>0;
-    if((down&&!atEnd())||(!down&&!atStart())){
-      e.preventDefault(); pause();
-      const now=Date.now();
-      if(now-lastWheel>450){ lastWheel=now; slide(down?1:-1); }
-    }
-  },{passive:false});
   ['pointerdown','touchstart'].forEach(ev=>car.addEventListener(ev,pause,{passive:true}));
   setInterval(()=>{
     if(!idle) return;
